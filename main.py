@@ -78,5 +78,5 @@ def post_news():
 
 
 # Post news to the bot
-# post_news()
+post_news()
 
