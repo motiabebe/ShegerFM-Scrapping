@@ -80,3 +80,4 @@ def post_news():
 # Post news to the bot
 post_news()
 
+# Run the bot
