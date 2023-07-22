@@ -33,10 +33,10 @@ posted_time = []
 
 for time in posted_time_soup:
     # if minutes convert to hours
-    if 'minute' in time.text:
+    if 'minute' or 'minutes' in time.text:
         posted_time.append(int(time.text.split(' ')[0]) / 60)
     # if hours
-    elif 'hour' in time.text:
+    elif 'hour' or 'hours' in time.text:
         posted_time.append(int(time.text.split(' ')[0]))
     elif 'day' in time.text:
         posted_time.append(int(time.text.split(' ')[0]) * 24)
@@ -52,7 +52,8 @@ shegerBot = telebot.TeleBot(token='5855711747:AAG09yZQVoN1_0O73HGyW54UE9-ggprGco
 # Function to post news to the bot
 def post_news():
     # Get the current time
-    currentTime = datetime.datetime.now()
+    # currentTime = datetime.datetime.now()
+    currentTime = datetime.datetime.now() + datetime.timedelta(hours=3)
     # Send current time to the bot
     shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo="https://motiabebe.github.io/ShegerFM-Scrapping/images/ShegerFM%20Full.png", caption="News for " + currentTime.strftime("%Y-%m-%d %H:%M") + "\n \n" + "Powered by Sheger FM")
 
@@ -81,3 +82,4 @@ def post_news():
 post_news()
 
 # Run the bot
+

@@ -3,10 +3,8 @@ name: run main.py
 on:
   schedule:
     # - cron: '0 0 * * 1' # At 00:00 on Monday
-    # run every 5 minutes
-    - cron: '*/5 * * * *'
-    # run at 7, 12 , 18 GMT
-    # - cron: '0 7,12,18 * * *'
+    # run every 6 hours
+    - cron: '0 */6 * * *'
 
 jobs:
   build:
