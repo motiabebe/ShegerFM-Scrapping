@@ -3,7 +3,7 @@ import telebot
 import datetime
 from bs4 import BeautifulSoup
 
-placeHolderImage = "https://motiabebe.github.io/ShegerFM-Scrapping/images/ShegerFM_Logo.png"
+placeHolderImage = 'https://motiabebe.github.io/ShegerFM-Scrapping/images/ShegerFMLogo.png'
 
 def scrapNews(url):
     # Open the URL and read the content
