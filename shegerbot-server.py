@@ -2,9 +2,10 @@ import requests
 import telebot
 from telebot import types
 import datetime
+import time
 from bs4 import BeautifulSoup
 
-placeHolderImage = "https://motiabebe.github.io/ShegerFM-Scrapping/images/ShegerFM_Logo.png"
+placeHolderImage = 'https://motiabebe.github.io/ShegerFM-Scrapping/images/ShegerFMLogo.png'
 
 def scrapNews(url):
     # Open the URL and read the content
@@ -16,31 +17,24 @@ def scrapNews(url):
     # Get the news titles and links
     scraped_news = website_soup.find_all(attrs={"data-hook": "item-container"})
 
-    titles = [t.find('a').text for t in scraped_news]
+    titles = [t.find('a').text.replace('\n','') for t in scraped_news]
     links = [articleLink.find('a')['href'] for articleLink in scraped_news]
 
     images_soup = website_soup.find_all(attrs={"data-hook": "gallery-item-image-img"})
-
+    images = []
     # if the number of titles and images are equal
     if len(titles) == len(images_soup):
         images = [image['src'] for image in images_soup]
     else:
         images = [placeHolderImage for image in titles]
+    
 
     subtitles_soup = website_soup.find_all(attrs={"data-hook": "post-description"})
-    subtitles = [subtitle.find('div').text for subtitle in subtitles_soup]
+    subtitles = [subtitle.find('div').text.replace('\n', '') for subtitle in subtitles_soup]
 
     posted_time_soup = website_soup.find_all(attrs={"data-hook": "time-to-read"})
-    # remove \n from posted_time_soup with no text
-    posted_time_soup = [time for time in posted_time_soup if time.text != '\n']
-    print(posted_time_soup)
-    posted_time = []
-
-    # Loop through the posted_time_soup and convert the time to hours
-
-
-
-
+    posted_time = [time.text.strip() for time in posted_time_soup]
+    
     return titles, subtitles, links, images, posted_time
            
 
@@ -68,7 +62,7 @@ def send_welcome(message):
 
 # Callback Handlers
 @shegerBot.callback_query_handler(func=lambda call: call.data == "news")
-def news():
+def news(call):
     # Call the post_news function with the url of the news
     # post_news("https://www.shegerfm.com/ወሬ")
     post_news("https://motiabebe.github.io/ShegerFM-Scrapping/scraped-html/news.html")
@@ -121,7 +115,7 @@ def send_news(message):
 
 # Function to post news to the bot
 def post_news(url):
-    print("Posting news...")
+    print("Posting news..." + url)
     # Get the news
     titles, subtitles, links, images, posted_time = scrapNews(url)
 
@@ -135,18 +129,21 @@ def post_news(url):
 
     # Loop through the news
     for i in range(len(titles)):
-        # if news is older than 6 hours skip it
-        if posted_time[i] > 6:
-            continue
-        else:
-            # Send the news to the bot
-            shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=images[i], caption=titles[i] + "\n \n " + subtitles[i] + "\n \n" + "Read more: " + links[i])
+
+        shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=images[i], caption=titles[i] + "\n \n " + subtitles[i] + "\n \n" + "Read more: " + links[i])
+        # delay for 3 seconds
+        time.sleep(3)
 
     print("News posted successfully!")
 
 # Run the bot
 print("Bot is running...")
+
+shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=placeHolderImage, caption="Bot is running...")
+
 shegerBot.polling()
+
+
 
 
 
