@@ -65,10 +65,10 @@ def post_news():
     # Loop through the news
     for i in range(len(titles)):
         # check if the news is posted is not older than 6 hours ago
-        if posted_time[i] > 6:
-            continue
-        elif posted_time[i] is type(str):
-            continue
+        # if posted_time[i] > 6:
+        #     continue
+        # elif posted_time[i] is type(str):
+        #     continue
 
         # if photo is available
         if images[i] != None:
