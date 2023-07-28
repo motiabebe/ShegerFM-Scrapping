@@ -22,7 +22,10 @@ def scrapWebsite(url, fileName):
         # Open the URL and read the content
         content = requests.get(url).content
 
-        # content = BeautifulSoup(content, 'html.parser')
+        content = BeautifulSoup(content, 'html.parser') 
+
+        # remove \n and \t from the html content
+        content = content.prettify().encode("utf-8")
 
         # Write the html content to a file
         with open(fileName, "w", encoding="utf-8") as file:
