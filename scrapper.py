@@ -7,8 +7,8 @@ if not os.path.exists("scraped-html"):
     os.makedirs("scraped-html")
 
 urls = {
-    "ወሬ": "https://www.shegerfm.com/ወሬ",
-    "የዛሬወሬ": "https://www.shegerfm.com/ወሬ/categories/የዛሬወሬ",
+    "news": "https://www.shegerfm.com",
+    "today-news": "https://www.shegerfm.com/ወሬ/categories/የዛሬወሬ",
     "local-news": "https://www.shegerfm.com/ወሬ/categories/local-news",
     "international-news": "https://www.shegerfm.com/ወሬ/categories/international-news",
     "business-news": "https://www.shegerfm.com/ወሬ/categories/business-news",

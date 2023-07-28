@@ -35,14 +35,18 @@ def scrapNews(url):
 
     for time in posted_time_soup:
         # if minutes convert to hours
-        if 'minute' or 'minutes' in time.text:
-            posted_time.append(int(time.text.split(' ')[0]) / 60)
+        if 'minute' in time.text or 'minutes' in time.text:
+            minutes = time.text.split(' ')[0]
+            if minutes.isdigit():
+                posted_time.append(int(minutes) / 60)
         # if hours
-        elif 'hour' or 'hours' in time.text:
-            posted_time.append(int(time.text.split(' ')[0]))
+        elif 'hour' in time.text or 'hours' in time.text:
+            hours = time.text.split(' ')[0]
+            if hours.isdigit():
+                posted_time.append(int(hours))
         # the rest append as it is
         else:
-            posted_time.append(time.text)
+            posted_time.append(time.text.strip())
 
     return titles, subtitles, links, images, posted_time
            
@@ -74,13 +78,13 @@ def send_welcome(message):
 def news(call):
     # Call the post_news function with the url of the news
     # post_news("https://www.shegerfm.com/ወሬ")
-    post_news("https://motiabebe.github.io/ShegerFM-Scrapping/scraped-html/ወሬ.html")
+    post_news("https://motiabebe.github.io/ShegerFM-Scrapping/scraped-html/news.html")
 
 @shegerBot.callback_query_handler(func=lambda call: call.data == "today")
 def today(call):
     # Call the post_news function with the url of the news from today
     # post_news("https://www.shegerfm.com/ወሬ/categories/የዛሬወሬ")
-    post_news("https://motiabebe.github.io/ShegerFM-Scrapping/scraped-html/የዛሬወሬ.html")
+    post_news("https://motiabebe.github.io/ShegerFM-Scrapping/scraped-html/today-news.html")
     
 @shegerBot.callback_query_handler(func=lambda call: call.data == "local")
 def local(call):
@@ -128,6 +132,7 @@ def send_news(message):
 
 # Function to post news to the bot
 def post_news(url):
+    print("Posting news...")
     # Get the news
     titles, subtitles, links, images, posted_time = scrapNews(url)
 
@@ -137,22 +142,16 @@ def post_news(url):
     timeMessage = "News for " + currentTime.strftime("%Y-%m-%d %H:%M") + "\n \n" + "Powered by Sheger FM"
 
     # Send current time to the bot
-    shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=placeHolderImage, caption=timeMessage)
+    shegerBot.send_message(chat_id='@shegerNewsUpdates', text=timeMessage)
 
     # Loop through the news
     for i in range(len(titles)):
         # check if the news is posted is not older than 6 hours ago
-        if posted_time[i] > 6:
-            continue
-        elif posted_time[i] is type(str):
+        if isinstance(posted_time[i], int) and posted_time[i] > 6:
             continue
 
-        # if photo is available
-        if images[i] != None:
-            shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=images[i], caption=titles[i] + "\n \n " + subtitles[i] + "\n \n" + "Read more: " + links[i])
-        else:
-        # if no photo is available
-            shegerBot.send_message(chat_id='@shegerNewsUpdates', photo=placeHolderImage, caption=titles[i] + "\n \n" + subtitles[i] + "\n \n" + "Read more: " + links[i])
+
+        shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=images[i], caption=titles[i] + "\n \n " + subtitles[i] + "\n \n" + "Read more: " + links[i])
 
     # get more news at current time + 6 hours
     # shegerBot.send_message(chat_id='@shegerNewsUpdates', text="Get more news at " + (currentTime + datetime.timedelta(hours=6)).strftime("%Y-%m-%d %H:%M"))
