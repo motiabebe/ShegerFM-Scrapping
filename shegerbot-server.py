@@ -28,7 +28,6 @@ def scrapNews(url):
     else:
         images = [placeHolderImage for image in titles]
     
-
     subtitles_soup = website_soup.find_all(attrs={"data-hook": "post-description"})
     subtitles = [subtitle.find('div').text.replace('\n', '') for subtitle in subtitles_soup]
 
@@ -138,8 +137,6 @@ def post_news(url):
 
 # Run the bot
 print("Bot is running...")
-
-shegerBot.send_photo(chat_id='@shegerNewsUpdates', photo=placeHolderImage, caption="Bot is running...")
 
 shegerBot.polling()
 
