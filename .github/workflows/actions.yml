@@ -9,7 +9,7 @@ on:
     # run every 5 minutes
     # - cron: '*/5 * * * *'
     # run at 3 times a day every 6 hours (07:00, 13:00, 19:00) gmt+3
-    - cron: '0 7,13,19 * * *'
+    # cron: '0 7,13,19 * * *'
 
 jobs:
   build:
