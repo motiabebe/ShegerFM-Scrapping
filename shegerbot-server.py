@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import requests
 import telebot
 from telebot import types
@@ -38,7 +41,7 @@ def scrapNews(url):
            
 
 # Create a Telegram bot
-shegerBot = telebot.TeleBot(token='5855711747:AAG09yZQVoN1_0O73HGyW54UE9-ggprGco8')
+shegerBot = telebot.TeleBot(token=os.getenv('TOKEN'))
 
 # Command Handlers
 @shegerBot.message_handler(commands=['start'])

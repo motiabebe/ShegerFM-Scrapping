@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv
+load_dotenv()
 import requests
 import telebot
 import datetime
@@ -47,7 +50,7 @@ def scrapNews(url):
            
 
 # Create a Telegram bot
-shegerBot = telebot.TeleBot(token='5855711747:AAG09yZQVoN1_0O73HGyW54UE9-ggprGco8')
+shegerBot = telebot.TeleBot(token=os.getenv('TOKEN'))
 
 # Function to post news to the bot
 def post_news():
