@@ -6,10 +6,17 @@
 #     # run every 6 hours
 #     # - cron: '0 */6 * * *'
 
+<<<<<<< HEAD
 #     # run every 5 minutes
 #     # - cron: '*/5 * * * *'
 #     # run at 3 times a day every 6 hours (07:00, 13:00, 19:00) gmt+3
 #     - cron: '0 7,13,19 * * *'
+=======
+    # run every 5 minutes
+    # - cron: '*/5 * * * *'
+    # run at 3 times a day every 6 hours (07:00, 13:00, 19:00) gmt+3
+    # cron: '0 7,13,19 * * *'
+>>>>>>> f39ed67919332d68c7db27be84a758bc687ca9b9
 
 # jobs:
 #   build:
@@ -32,6 +39,12 @@
 #       - name: execute py script # run main.py
 #         run: python main.py
 
+<<<<<<< HEAD
 #       - name: execute py script # run scrapper.py
 #         run: python scrapper.py
       
+=======
+      - name: execute py script # run scrapper.py
+        run: python scrapper.py
+      
+>>>>>>> f39ed67919332d68c7db27be84a758bc687ca9b9
